@@ -94,7 +94,7 @@ class SoundViewController: UIViewController {
         
         sound.name = nameTextField.text
         
-        sound.audio = NSData(contentsOf: audioURL!) as! Data
+        sound.audio = NSData(contentsOf: audioURL!)! as Data
         
         (UIApplication.shared.delegate as! AppDelegate).saveContext()
         print("\nsaved audio file!\n")
