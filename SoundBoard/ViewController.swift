@@ -62,6 +62,24 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         } catch {
             print("error playing audio: \(error)")
         }
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            print("delete item")
+            let sound = sounds[indexPath.row]
+            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+            context.delete(sound)
+            (UIApplication.shared.delegate as! AppDelegate).saveContext()
+            do{
+                sounds = try context.fetch(Sound.fetchRequest())
+            } catch {
+                print("error fetching: \(error)")
+            }
+            
+            tableView.reloadData()
+        }
     }
 
 }
